@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Publications – A. Milas</title>
+<style>
+:root{--bg:#f7fafc;--fg:#1d2733;--mut:#5b6b7b;--acc:#1b5fa8;--card:#fff;--line:#d9e2ec}
+@media (prefers-color-scheme:dark){:root{--bg:#141a21;--fg:#e4eaf0;--mut:#93a3b3;--acc:#7fb4ec;--card:#1c242d;--line:#2d3a47}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:860px;margin:0 auto;padding:2rem 1rem 4rem}
+h1{text-align:center;margin:0 0 .3rem;font-size:1.7rem}
+.top{text-align:center;color:var(--mut);margin-bottom:1.2rem}
+.top a{margin:0 .6rem}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+#q{width:100%;box-sizing:border-box;padding:.6rem .8rem;margin:.5rem 0 1rem;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg);font:inherit}
+#count{color:var(--mut);font-size:.9rem;margin-bottom:.5rem}
+ol{list-style:none;margin:0;padding:0}
+li{display:flex;gap:.8rem;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:.7rem .9rem;margin-bottom:.5rem}
+.n{color:var(--mut);min-width:2.4rem;text-align:right}
+.t{font-weight:bold}.a{display:block}.v{display:block;color:var(--mut)}
+.l a{margin-right:.7rem;font-size:.9rem}
+</style>
+</head>
+<body>
+<main>
+<h1>Publications and Preprints</h1>
+<div class="top">
+<a href="https://arxiv.org/a/milas_a_1">arXiv listing</a>
+<a href="abridged_papers.pdf">CV and publication list (PDF)</a>
+<a href="index.html">Back</a>
+</div>
+<input id="q" type="search" placeholder="Search title, coauthor, journal, year…">
+<div id="count"></div>
+<ol id="list"></ol>
+</main>
+
+<script>
+/* ============================================================
+   HOW TO ADD A PAPER: copy one line, paste it at the TOP of the
+   list (newest first), and edit it. Numbering is automatic.
+   Fields: t=title, a=authors, v=journal/volume/pages/year,
+   ax=arXiv id (e.g. "2301.01234"), pdf=file name or URL,
+   doi=DOI, url=any other link (text in "ul").
+   Any field may be omitted.
+   ============================================================ */
+const P = [
+{t:"On 2-orbifolds of affine W-algebras",a:"A. Milas, M. Penn",v:"New York J. Math. (2025)"},
+{t:"On certain logarithmic W-algebras associated to sp(4)",a:"D. Adamović, A. Milas",v:"Rad HAZU (2024)"},
+{t:"Free fermions revisited",a:"A. Milas, M. Penn",v:"J. Algebra Appl. (2024)",pdf:"N1.Urod.JAA.final.pdf"},
+{t:"On certain identities involving Nahm-type sums with double poles",a:"S. Kanade, A. Milas, M. Russell",v:"Adv. in Appl. Math. (2023)"},
+{t:"Modularity of the tadpole Nahm sums",a:"A. Milas, L. Wang",v:"Int. J. Number Theory (2023)"},
+{t:"Jet schemes, quantum dilogarithm and Feigin–Stoyanovsky’s principal subspaces",a:"H. Li, A. Milas",v:"J. Algebra (2024)"},
+{t:"Graph schemes, graph series, and modularity",a:"K. Bringmann, C. Jennings-Shaffer, A. Milas",v:"J. Combin. Theory Ser. A (2021)"},
+{t:"Higher depth false modular forms",a:"K. Bringmann, J. Kaszian, A. Milas, C. Nazaroglu",v:"Commun. Contemp. Math."},
+{t:"Integral representations of rank two false theta functions and their modularity properties",a:"K. Bringmann, J. Kaszian, A. Milas, C. Nazaroglu",v:"Res. Math. Sci. (2021)"},
+{t:"Lie Groups, Number Theory, and Vertex Algebras (editors: D. Adamović, A. Dujella, A. Milas, P. Pandžić)",a:"Proceedings of the Dubrovnik Conference “Representation Theory XVI”, June 2019",v:"Contemp. Math. 758 (2021)"},
+{t:"Permutation orbifolds of N=1 and N=2 vertex algebras as W-algebras",a:"H. Li, A. Milas, J. Wauchope",v:"Comm. Algebra (2020)"},
+{t:"Permutation orbifolds of the Virasoro vertex algebra and W-algebras",a:"A. Milas, M. Penn, C. Sadowski",v:"J. Algebra (2020)"},
+{t:"On parafermion vertex algebras of sl(2) at level −3/2 and sl(3) at level −3/2",a:"D. Adamović, A. Milas, Q. Wang",v:"Commun. Contemp. Math. (2020)"},
+{t:"Further q-series identities and conjectures relating false theta functions and characters",a:"C. Jennings-Shaffer, A. Milas",v:"Contemp. Math. (2020)",pdf:"Cont.Math.v08.pdf"},
+{t:"On q-series identities for false theta functions",a:"C. Jennings-Shaffer, A. Milas",v:"Adv. Math. (2020)"},
+{t:"S₃-permutation orbifolds of sl(2) vertex algebras",a:"A. Milas, M. Penn",v:"Glas. Mat. (2021)"},
+{t:"On some vertex algebras related to W(sl₄, f)",a:"D. Adamović, A. Milas, M. Penn",v:"Contemp. Math. (2020)",pdf:"Adamovic_Milas_Penn.pdf"},
+{t:"Higher depth quantum modular forms and plumbed 3-manifolds",a:"K. Bringmann, K. Mahlburg, A. Milas",v:"Lett. Math. Phys. (2020)",ax:"1904.05612"},
+{t:"Quantum modular forms and plumbing graphs of 3-manifolds",a:"K. Bringmann, K. Mahlburg, A. Milas",v:"J. Combin. Theory Ser. A (2020)",ax:"1810.05612"},
+{t:"On some vertex algebras related to V₋₁(sl(n)) and their characters",a:"D. Adamović, A. Milas",v:"Transform. Groups (2021)",ax:"1805.09771"},
+{t:"Permutation orbifolds of the Heisenberg vertex algebra H(3)",a:"A. Milas, M. Penn, H. Shao",v:"J. Math. Phys. (2019)"},
+{t:"Lie Algebras, Vertex Operator Algebras, and Related Topics: Conference in Honor of J. Lepowsky and R. Wilson (editors: K. C. Misra, A. Milas, E. Jurisich, K. Barron)",a:"",v:"Contemp. Math. 695, Amer. Math. Soc. (2017)"},
+{t:"S₃-permutation orbifolds of fermionic vertex algebras",a:"A. Milas, M. Penn, J. Wauchope",v:"IndAM Proceedings Series (2019)",pdf:"MPW_book.pdf"},
+{t:"On characters of L(−Λ₀) modules",a:"K. Bringmann, K. Mahlburg, A. Milas",v:"Commun. Contemp. Math. (2019)",ax:"1803.08029"},
+{t:"Rank two false theta functions and Jacobi forms of negative definite matrix index",a:"K. Bringmann, J. Kaszian, A. Milas, S. Zwegers",v:"Adv. in Appl. Math. (2020)",pdf:"negative_matrix_index181.pdf"},
+{t:"Some examples of higher depth vector-valued quantum modular forms",a:"K. Bringmann, J. Kaszian, A. Milas",v:"Proceedings of the Rompa Conference (2018)",pdf:"AsymptoticsEichler82.pdf"},
+{t:"Vector-valued higher depth quantum modular forms and higher Mordell integrals",a:"K. Bringmann, J. Kaszian, A. Milas",v:"arXiv (2018)"},
+{t:"Higher depth quantum modular forms, multiple Eichler integrals, and 𝔰𝔩₃ false theta functions",a:"K. Bringmann, J. Kaszian, A. Milas",v:"Res. Math. Sci. (2019)",ax:"1704.06891"},
+{t:"Higher rank partial and false theta functions and representation theory",a:"T. Creutzig, A. Milas",v:"Adv. Math. (2017)",ax:"1607.08563"},
+{t:"Logarithmic link invariants of U_q^H(sl₂) and asymptotic dimensions of singlet vertex algebras",a:"T. Creutzig, A. Milas, M. Rupert",v:"J. Pure Appl. Algebra (2017)",ax:"1605.05634"},
+{t:"Asymptotic behavior of partial and false theta functions arising from Jacobi forms and regularized characters",a:"K. Bringmann, A. Folsom, A. Milas",v:"J. Math. Phys. (2017)",ax:"1604.01977"},
+{t:"Some applications and constructions of intertwining operators in LCFT",a:"D. Adamović, A. Milas",v:"Contemp. Math. (2017)",pdf:"Adamovic_Milas_final.pdf"},
+{t:"The Lusztig–Macdonald–Wall conjectures and q-difference equations",a:"K. Bringmann, K. Mahlburg, A. Milas",v:"Contemp. Math. (2017)"},
+{t:"W-algebras, higher rank false theta functions and quantum dimensions",a:"K. Bringmann, A. Milas",v:"Selecta Math. (2016)",pdf:"Selecta_Final.pdf",doi:"10.1007/s00029-016-0289-z"},
+{t:"Vertex algebraic structure of principal subspaces of basic A₂ₙ⁽²⁾-modules",a:"C. Calinescu, A. Milas, M. Penn",v:"J. Pure Appl. Algebra 220 (2016), 1752–1784",pdf:"A_2n_2final.revision1.pdf"},
+{t:"Vertex operator algebras and constant term identities",a:"D. Adamović, X. Lin, A. Milas",v:"SIGMA 11 (2015), 019, 16 pp."},
+{t:"On Fourier expansion of Bloch–Okounkov n-point functions",a:"K. Bringmann, A. Milas",v:"J. Combin. Theory Ser. A 136 (2015), 201–219"},
+{t:"On regularized quantum dimensions of the singlet vertex operator algebra and false theta functions",a:"T. Creutzig, A. Milas, S. Wood",v:"Int. Math. Res. Not. IMRN (2017)",doi:"10.1093/imrn/rnw037"},
+{t:"W-algebras, false theta functions and quantum modular forms, I",a:"K. Bringmann, A. Milas",v:"Int. Math. Res. Not. IMRN 2015, no. 21, 11351–11387",pdf:"BringmannMilas1.IMRN.pdf"},
+{t:"Principal subspaces for A₂⁽²⁾",a:"C. Calinescu, J. Lepowsky, A. Milas",v:"Internat. J. Math. 25 (2014), 1450063, 44 pp."},
+{t:"False theta functions and the Verlinde formula",a:"T. Creutzig, A. Milas",v:"Adv. Math. 262 (2014), 520–554"},
+{t:"Logarithmic conformal field theory and vertex operator (super)algebras",a:"D. Adamović, A. Milas",v:"J. Phys. A 46 (2013), no. 49, 494005, 23 pp."},
+{t:"ADE subalgebras of the triplet vertex algebra W(p): D-series",a:"D. Adamović, X. Lin, A. Milas",v:"Internat. J. Math. 25 (2014), no. 1, 1450001, 34 pp."},
+{t:"ADE subalgebras of the triplet vertex algebra W(p): A-series",a:"D. Adamović, X. Lin, A. Milas",v:"Commun. Contemp. Math. 15 (2013), 1350028, 30 pp."},
+{t:"Characters of modules of irrational vertex algebras",a:"A. Milas",v:"Conformal Field Theory, Automorphic Forms and Related Topics (CFT 2011, Heidelberg), Vol. 8 (2014), 1–17"},
+{t:"Representation theory of A(p) and A_{2,p} vertex operator (super)algebras",a:"D. Adamović, A. Milas",v:"Contemp. Math. 602, Amer. Math. Soc. (2013), 23–38"},
+{t:"Some nonstandard representations of vertex operator algebras",a:"A. Milas",v:"Preprint (2010), unpublished"},
+{t:"C₂-cofinite vertex algebras and their logarithmic modules",a:"A. Milas, D. Adamović",v:"Conformal Field Theories and Tensor Categories (Beijing), Mathematical Lectures from Beijing University, Vol. 2 (2014), 18 pp.",pdf:"AdM-Beijing2011final-3.pdf"},
+{t:"Lattice vertex algebras and combinatorial bases: general case and W-algebras",a:"A. Milas, M. Penn",v:"New York J. Math. 18 (2012), 621–650"},
+{t:"An explicit construction of logarithmic modules for the vertex algebra W_{p,p′}",a:"D. Adamović, A. Milas",v:"J. Math. Phys. 53 (2012), 073511"},
+{t:"The 3-state Potts model and Rogers–Ramanujan series",a:"A. Feingold, A. Milas",v:"Cent. Eur. J. Math. 11 (2013), 1–16"},
+{t:"On W-algebra extensions of (2,p) minimal models: p > 3",a:"D. Adamović, A. Milas",v:"J. Algebra 344 (2011), 313–332",ax:"1101.0803"},
+{t:"The structure of Zhu’s algebras for certain W-algebras",a:"D. Adamović, A. Milas",v:"Adv. Math. 227 (2011), 2425–2456",ax:"1006.5134"},
+{t:"Vertex-algebraic structure of the principal subspaces of level one modules for the untwisted affine Lie algebras of types A, D, E",a:"C. Calinescu, J. Lepowsky, A. Milas",v:"J. Algebra 323 (2010), no. 1, 167–192",ax:"0908.4054"},
+{t:"On W-algebras associated to (2,p) minimal models and their representations",a:"D. Adamović, A. Milas",v:"Int. Math. Res. Not. IMRN 2010, no. 20, 3896–3934",ax:"0908.4053"},
+{t:"Lattice construction of logarithmic modules for certain vertex algebras",a:"D. Adamović, A. Milas",v:"Selecta Math. (N.S.) 15 (2009), no. 4, 535–561",ax:"0902.3417"},
+{t:"An analogue of modular BPZ equation in logarithmic (super)conformal field theory",a:"D. Adamović, A. Milas",v:"Contemp. Math. 497 (2009), 1–17"},
+{t:"The N=1 triplet vertex operator superalgebras: twisted sector",a:"D. Adamović, A. Milas",v:"SIGMA 4 (2008), 087, 24 pp. (Special Issue on Kac–Moody Algebras and Applications)",ax:"0806.3560"},
+{t:"The N=1 triplet vertex operator superalgebras",a:"D. Adamović, A. Milas",v:"Comm. Math. Phys. 288 (2009), 225–270",ax:"0712.0379"},
+{t:"On the triplet vertex algebra W(p)",a:"D. Adamović, A. Milas",v:"Adv. Math. 217 (2008), 2664–2699",ax:"0707.1857"},
+{t:"Vertex-algebraic structure of principal subspaces of certain A₁⁽¹⁾-modules, II: higher-level case",a:"C. Calinescu, J. Lepowsky, A. Milas",v:"J. Pure Appl. Algebra 212 (2008)",ax:"0710.1527"},
+{t:"Logarithmic intertwining operators and W(2,2p−1) algebras",a:"D. Adamović, A. Milas",v:"J. Math. Phys. 48 (2007), 073503",ax:"math/0702081"},
+{t:"Vertex-algebraic structure of principal subspaces of certain A₁⁽¹⁾-modules, I: level one case",a:"C. Calinescu, J. Lepowsky, A. Milas",v:"Internat. J. Math. 19 (2008), 71–92",ax:"0704.1759"},
+{t:"Logarithmic intertwining operators and vertex operators",a:"A. Milas",v:"Comm. Math. Phys. 277 (2008), 497–529",ax:"math/0609306"},
+{t:"Modular invariance, modular identities and supersingular j-invariants",a:"A. Milas",v:"Math. Res. Lett. 13 (2006), 729–746",ax:"math/0609308",note:"check arXiv number (same as the entry for Contemp. Math. 442)"},
+{t:"On certain automorphic forms associated to rational vertex operator algebras",a:"A. Milas",v:"London Math. Soc. Lecture Note Series (to appear)"},
+{t:"Number theoretic properties of Wronskians of Andrews–Gordon series",a:"A. Milas, E. Mortenson, K. Ono",v:"Int. J. Number Theory 4 (2008), 1–15",ax:"math/0512623"},
+{t:"Characters, supercharacters and Weber modular functions",a:"A. Milas",v:"J. reine angew. Math. (Crelle) 608 (2007), 35–64",pdf:"crellefin.pdf"},
+{t:"Modular forms and almost linear dependence of graded dimensions",a:"A. Milas",v:"Contemp. Math. 442 (2007), 411–424",ax:"math/0609308"},
+{t:"Twisted vertex operators and Bernoulli polynomials",a:"B. Doyon, J. Lepowsky, A. Milas",v:"Commun. Contemp. Math. 8 (2006), 247–307",ax:"math/0311151"},
+{t:"Virasoro algebra, Dedekind η-function and specialized Macdonald’s identities",a:"A. Milas",v:"Transform. Groups 9 (2004), 273–288",ax:"math/0311405"},
+{t:"Ramanujan’s “Lost Notebook” and the Virasoro algebra",a:"A. Milas",v:"Comm. Math. Phys. 251 (2004), 567–588",ax:"math/0309201"},
+{t:"Rogers–Selberg’s recursion, Gordon–Andrews identities and intertwining operators",a:"S. Capparelli, J. Lepowsky, A. Milas",v:"Ramanujan J. 12 (2006), 377–395",ax:"math/0310080"},
+{t:"Twisted modules and generalized Bernoulli polynomials",a:"B. Doyon, J. Lepowsky, A. Milas",v:"Int. Math. Res. Not. 2003, no. 44, 2391–2408",ax:"math/0303193"},
+{t:"Rogers–Ramanujan recursion and intertwining operators",a:"S. Capparelli, J. Lepowsky, A. Milas",v:"Commun. Contemp. Math. 5 (2003), 1–20",ax:"math/0211265"},
+{t:"Formal differential operators, vertex operator algebras and zeta-values, II",a:"A. Milas",v:"J. Pure Appl. Algebra 183 (2003), 191–244",ax:"math/0303154"},
+{t:"Formal differential operators, vertex operator algebras and zeta-values, I",a:"A. Milas",v:"J. Pure Appl. Algebra 183 (2003), 129–190",ax:"math/0303152"},
+{t:"Weak modules and logarithmic intertwining operators for vertex operator algebras",a:"A. Milas",v:"Contemp. Math. 297 (2002), 201–227",ax:"math/0101167"},
+{t:"Fusion rings for degenerate minimal models",a:"A. Milas",v:"J. Algebra 254 (2002), 300–335",ax:"math/0003225"},
+{t:"Correlation functions, differential operators and zeta-functions",a:"A. Milas",v:"Fields Inst. Commun. 39 (2003), 139–167"},
+{t:"Intertwining operator superalgebras and vertex tensor categories for superconformal algebras, II",a:"Y.-Z. Huang, A. Milas",v:"Trans. Amer. Math. Soc. 354 (2002), 363–385",ax:"math/0004039"},
+{t:"Intertwining operator superalgebras and vertex tensor categories for superconformal algebras, I",a:"Y.-Z. Huang, A. Milas",v:"Commun. Contemp. Math. 4 (2002), no. 2, 327–355",ax:"math/9909039"},
+{t:"Vertex operator algebras associated to modular invariant representations",a:"A. Milas",v:"Proc. XXIst Int. Colloquium on Group Theoretical Methods in Physics, World Scientific (1997)"},
+{t:"Vertex operator algebras associated to modular invariant representations for A₁⁽¹⁾",a:"D. Adamović, A. Milas",v:"Math. Res. Lett. 2 (1995), 563–575",ax:"q-alg/9509025"}
+];
+
+const list=document.getElementById('list'),q=document.getElementById('q'),cnt=document.getElementById('count');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function links(p){
+  const L=[];
+  if(p.ax)L.push(`<a href="https://arxiv.org/abs/${esc(p.ax)}">arXiv</a>`);
+  if(p.doi)L.push(`<a href="https://doi.org/${esc(p.doi)}">DOI</a>`);
+  if(p.pdf)L.push(`<a href="${esc(p.pdf)}">PDF</a>`);
+  if(p.url)L.push(`<a href="${esc(p.url)}">${esc(p.ul||'Link')}</a>`);
+  return L.join('');
+}
+function render(){
+  const f=q.value.trim().toLowerCase(),N=P.length;let shown=0;
+  list.innerHTML=P.map((p,i)=>{
+    const txt=(p.t+' '+p.a+' '+p.v).toLowerCase();
+    if(f&&!txt.includes(f))return'';
+    shown++;
+    return `<li><span class="n">${N-i}.</span><div><span class="t">${esc(p.t)}</span><span class="a">${esc(p.a)}</span><span class="v">${esc(p.v)}</span><span class="l">${links(p)}</span></div></li>`;
+  }).join('');
+  cnt.textContent=shown+' of '+N+' items';
+}
+q.addEventListener('input',render);render();
+</script>
+</body>
+</html>
